@@ -1,0 +1,38 @@
+version: '3.9'
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:13.4-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_DB_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB_DATABASE}
+      PGDATA: /var/lib/postgresql/data/
+    env_file: .env  
+    volumes:
+      - "postgres_db:/var/lib/postgresql/data/"     
+      # postgres_db:
+      #   - type: volume
+      #     source: ${POSTGRES_DATA_DIR}
+      #     target: /var/lib/postgresql/data/
+      #     volume:
+      #       nocopy: true
+
+    ports:
+      - "5432:5432"
+    networks:
+      - soares_net
+    restart: unless-stopped
+
+networks:
+  soares_net:
+    driver: bridge
+
+volumes:
+  postgres_db:
+    
+  
+
+
+      
+
